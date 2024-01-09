@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background: url('https://cdn.discordapp.com/attachments/1123972356893851779/1194297619170730034/bg-signin.jpg?ex=65afd755&is=659d6255&hm=3f9d78a66ff52791dae1952fd7f87d3f025b1c529a98b50d67fff6029656bd74&') center center fixed;
+        background-size: cover;
+        height: 100vh;
+        overflow: hidden; /* Impede a barra de rolagem vertical */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #menu {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 200px;
+        height: 100%;
+        background-color: #333;
+        color: #fff;
+        padding-top: 20px;
+      }
+
+      #menu a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: #fff;
+        border-bottom: 1px solid #555;
+        transition: color 0.3s ease; /* Adiciona uma transição suave de cor */
+      }
+
+      #menu a:hover {
+        color: #ffcc00; /* Cor ao passar o mouse */
+      }
+
+      #logado {
+        margin-left: 220px; /* Ajuste a margem para acomodar o menu */
+        color: #fff;
+      }
+
+      #painel {
+        display: none;
+        position: fixed;
+        width: 900px; /* Ajuste a largura conforme necessário */
+        height: 600px; /* Ajuste a altura conforme necessário */
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+        border-radius: 10px; /* Adiciona bordas arredondadas ao painel */
+        background: url('https://cdn.discordapp.com/attachments/1123972356893851779/1194301666497937448/bg-signup.png?ex=65afdb1a&is=659d661a&hm=4f726968085ca7351d1eaf0ac7ed1e627ee86b3b429f6cbf0aa9ba0beb5b3006&') center center no-repeat;
+        background-size: cover;
+        overflow: hidden;
+        left: 60%; /* Ajuste a posição para a esquerda */
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      #painel-aberto {
+        display: block;
+      }
+
+      #painel p {
+        padding: 20px;
+        margin: 0;
+      }
+
+      #painel button {
+        padding: 10px;
+        margin-top: 10px;
+        border: none;
+        background-color: #333;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px; /* Adiciona bordas arredondadas aos botões dentro do painel */
+      }
+
+      #painel button:hover {
+        background-color: #555;
+      }
+
+      #lista-pessoas {
+        max-height: 300px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      #lista-pessoas div {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      #lista-pessoas div button {
+        background-color: #ff0000;
+        color: #fff;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+        border-radius: 3px;
+        margin-left: 5px;
+      }
+
+      #lista-pessoas div span {
+        flex-grow: 1;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="menu">
+      <a href="#" onclick="abrirPainel('Inicio')">Início</a>
+      <a href="#" onclick="abrirPainel('Informacao')">Informação</a>
+      <a href="#" onclick="abrirPainel('ModMenu')">Mod Menu</a>
+      <a href="#" onclick="abrirPainel('Key')">Key</a>
+      <a href="#" onclick="abrirPainel('Sistema')">Sistema</a>
+    </div>
+
+    <h1 id="logado"></h1>
+
+    <script src="./assets/js/index.js"></script>
+    <script>
+      // Variável para armazenar a lista de pessoas
+      var pessoas = [];
+
+      function abrirPainel(opcao) {
+        var conteudoPainel = '';
+
+        switch (opcao) {
+          case 'Inicio':
+            conteudoPainel = 'Conteúdo do Painel Início';
+            break;
+          case 'Informacao':
+            conteudoPainel = 'Conteúdo do Painel Informação';
+            break;
+          case 'ModMenu':
+            conteudoPainel = 'Conteúdo do Painel Mod Menu';
+            break;
+          case 'Key':
+            conteudoPainel = 'Conteúdo do Painel Key';
+            break;
+          case 'Sistema':
+            conteudoPainel = '<h2>Sistema de CRUD</h2>' +
+              '<button onclick="criar()">Adicionar Pessoa</button>' +
+              '<div id="lista-pessoas"></div>';
+            break;
+          default:
+            conteudoPainel = 'Conteúdo do Painel';
+        }
+
+        document.getElementById("painel").innerHTML = '<p>' + conteudoPainel + '</p><button onclick="fecharPainel()">Fechar</button>';
+        document.getElementById("painel").style.display = "block";
+
+        // Atualizar a lista de pessoas ao abrir o painel do sistema
+        if (opcao === 'Sistema') {
+          atualizarListaPessoas();
+        }
+      }
+
+      function fecharPainel() {
+        document.getElementById("painel").style.display = "none";
+      }
+
+      function criar() {
+        var nome = prompt('Digite o nome da pessoa:');
+        var data = prompt('Digite a data de nascimento da pessoa:');
+
+        // Verificar se o nome e a data foram fornecidos
+        if (nome && data) {
+          // Adicionar pessoa à lista
+          pessoas.push({ nome: nome, data: data });
+
+          // Atualizar a lista de pessoas
+          atualizarListaPessoas();
+        }
+      }
+
+      function ler() {
+        alert('Função Ler: Adicione código para ler os itens.');
+      }
+
+      function atualizar(index) {
+        var novoNome = prompt('Digite o novo nome:');
+        var novaData = prompt('Digite a nova data de nascimento:');
+
+        // Verificar se o novo nome e a nova data foram fornecidos
+        if (novoNome && novaData) {
+          // Atualizar os dados da pessoa na lista
+          pessoas[index].nome = novoNome;
+          pessoas[index].data = novaData;
+
+          // Atualizar a lista de pessoas
+          atualizarListaPessoas();
+        }
+      }
+
+      function deletar(index) {
+        // Remover pessoa da lista
+        pessoas.splice(index, 1);
+
+        // Atualizar a lista de pessoas
+        atualizarListaPessoas();
+      }
+
+      function atualizarListaPessoas() {
+        var listaPessoas = document.getElementById('lista-pessoas');
+        listaPessoas.innerHTML = ''; // Limpar a lista antes de atualizar
+
+        pessoas.forEach(function (pessoa, index) {
+          var divPessoa = document.createElement('div');
+          divPessoa.innerHTML = '<span>Nome: ' + pessoa.nome + ', Data de Nascimento: ' + pessoa.data + '</span>' +
+            '<button onclick="atualizar(' + index + ')">Atualizar</button>' +
+            '<button onclick="deletar(' + index + ')">Excluir</button>';
+          listaPessoas.appendChild(divPessoa);
+        });
+      }
+    </script>
+
+    <div id="painel"></div>
+  </body>
+</html>

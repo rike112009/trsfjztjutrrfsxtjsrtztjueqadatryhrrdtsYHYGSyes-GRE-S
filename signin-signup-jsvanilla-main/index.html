@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      #menu {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 200px;
+        height: 100%;
+        background-color: #333;
+        color: #fff;
+        padding-top: 20px;
+      }
+
+      #menu a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: #fff;
+        border-bottom: 1px solid #555;
+      }
+
+      #logado {
+        margin-left: 220px; /* Ajuste a margem para acomodar o menu */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="menu">
+      <a href="#">Início</a>
+      <a href="#">Informação</a>
+      <a href="#">Mod Menu</a>
+      <a href="#">Key</a>
+    </div>
+
+    <h1 id="logado"></h1>
+    
+    <button onclick="sair()">Sair</button>
+
+    <script src="./assets/js/index.js"></script>
+  </body>
+</html>
